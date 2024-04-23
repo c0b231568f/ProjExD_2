@@ -13,11 +13,11 @@ DELTA={
     pg.K_RIGHT: (5,0),
 }  # 移動量辞書
 KKT={
-    (0, -5): 270,
-    (5, -5): 225,
-    (5, 0): 180,
-    (5, 5): 135,
-    (0, 5): 90,
+    (0, -5): 90,
+    (5, -5): 45,
+    (5, 0): 0,
+    (5, 5): -45,
+    (0, 5): -90,
     (-5, 5): 45,
     (-5, 0): 0,
     (-5, -5): -45,
@@ -86,7 +86,11 @@ def main():
             if key_lst[k]:
                 sum_mv[0] += v[0]
                 sum_mv[1] += v[1]
-                kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), KKT[(sum_mv[0], sum_mv[1])], 2.0)
+                if sum_mv[0]>=0:
+                    kk_img = pg.transform.flip(pg.image.load("fig/3.png"), True, False )
+                    kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), KKT[(sum_mv[0], sum_mv[1])], 2.0)
+                else:
+                    kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), KKT[(sum_mv[0], sum_mv[1])], 2.0)
                 #飛ぶ方向に従ってこうかとん画像を切り替える
         kk_rct.move_ip(sum_mv)
         if check_bound(kk_rct) != (True, True):
